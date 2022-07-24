@@ -1,5 +1,6 @@
 package entities;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -8,6 +9,7 @@ import java.util.*;
 import javax.persistence.*;
 
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
 @Entity
 @Table(name = "users")
@@ -24,15 +26,17 @@ public class User {
     private String role;
     @Column(name = "enabled")
     private boolean enabled;
-    @OneToOne
-    @JoinColumn(name = "owner_id")
-    private Owner owner;
+//    @OneToOne
+//    @JoinColumn(name = "owner_id")
+//    private Owner owner;
+    private String ownerId;
 
-    public User(String username, String password, String role, boolean enabled) {
+    public User(UserDto userDto) {
         this.id =  UUID.randomUUID().toString();
-        this.username = username;
-        this.password = password;
-        this.role = role;
-        this.enabled = enabled;
+        this.username = userDto.getUsername();
+        this.password = userDto.getPassword();
+        this.role = userDto.getRole();
+        this.enabled = userDto.isEnabled();
+        this.ownerId=userDto.getOwnerId();
     }
 }

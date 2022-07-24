@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -23,9 +24,13 @@ public class Cat {
     @Column(name = "color")
     @Enumerated(EnumType.STRING)
     private CatColor color;
-    @ManyToOne
-    @JoinColumn(name = "owner_id")
-    private Owner owner;
+//    @ManyToOne
+//    @JoinColumn(name = "owner_id")
+//    private Owner owner;
+    @Column(name = "owner_id")
+    private String ownerId;
+    @OneToMany(mappedBy = "id")
+    private List<Cat> friends;
 
     public Cat(String name, Date birthDate, String breed, CatColor color) {
         this.name = name;
@@ -33,5 +38,13 @@ public class Cat {
         this.birthDate = birthDate;
         this.breed = breed;
         this.color = color;
+    }
+
+    public void addFriend(Cat cat){
+        friends.add(cat);
+    }
+
+    public void deleteFriend(Cat cat){
+        friends.remove(cat);
     }
 }

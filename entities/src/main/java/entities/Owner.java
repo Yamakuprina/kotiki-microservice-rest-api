@@ -20,20 +20,21 @@ public class Owner {
     private String id;
     @Column(name = "birth_date")
     private Date birthDate;
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Cat> cats;
+    //@OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
+    //@OneToMany(mappedBy = "owner_id", cascade = CascadeType.ALL)
+    //private List<Cat> cats;
 
     public Owner(String name, Date birthDate) {
         this.name = name;
         this.id = UUID.randomUUID().toString();
         this.birthDate = birthDate;
-        this.cats = new ArrayList<Cat>();
+        //this.cats = new ArrayList<Cat>();
     }
 
-    public void addCat(Cat cat) {
-        cats.add(cat);
-    }
-    public void removeCat(Cat cat) {
-        cats.remove(cat);
-    }
+    //public void addCat(Cat cat) {
+    //    cats.add(cat);
+    //}
+    //public void removeCat(Cat cat) {
+    //    cats.remove(cat);
+    //}
 }
