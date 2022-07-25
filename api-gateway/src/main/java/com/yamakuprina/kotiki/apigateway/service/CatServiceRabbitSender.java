@@ -44,7 +44,7 @@ public class CatServiceRabbitSender implements CatService {
     public void save(CatDto cat) throws Exception {
         if (cat.getOwnerId() == null)
             cat.setOwnerId(((KotikiUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getOwnerId());
-        //else if (ownerService.findById(cat.getOwnerId()) == null) throw new Exception("No Owner found");
+        else if (ownerService.findById(cat.getOwnerId()) == null) throw new Exception("No Owner found");
         String response = template.convertSendAndReceiveAsType(Queues.EXCHANGE,
                 Queues.ROUTING_KEY + Queues.CATS_QUEUE_SAVE,
                 cat,
