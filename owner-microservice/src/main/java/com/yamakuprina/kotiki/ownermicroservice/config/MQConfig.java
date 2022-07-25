@@ -14,7 +14,7 @@ public class MQConfig {
     public static final String OWNERS_QUEUE_DELETE = "owners_delete";
 
     @Bean
-    public MessageConverter messageConverter(){
+    public MessageConverter messageConverter() {
         return new Jackson2JsonMessageConverter();
     }
 }

@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,9 +26,6 @@ public class Cat {
     @Column(name = "color")
     @Enumerated(EnumType.STRING)
     private CatColor color;
-//    @ManyToOne
-//    @JoinColumn(name = "owner_id")
-//    private Owner owner;
     @Column(name = "owner_id")
     private String ownerId;
     @ManyToMany(fetch = FetchType.EAGER)
@@ -37,18 +33,18 @@ public class Cat {
 
     public Cat(CatDto catDto) {
         this.name = catDto.getName();
-        this.id = catDto.getId()==null? UUID.randomUUID().toString() : catDto.getId();
+        this.id = catDto.getId() == null ? UUID.randomUUID().toString() : catDto.getId();
         this.birthDate = catDto.getBirthDate();
         this.breed = catDto.getBreed();
         this.color = catDto.getColor();
         this.ownerId = catDto.getOwnerId();
     }
 
-    public void addFriend(Cat cat){
+    public void addFriend(Cat cat) {
         friends.add(cat);
     }
 
-    public void deleteFriend(Cat cat){
+    public void deleteFriend(Cat cat) {
         friends.remove(cat);
     }
 }

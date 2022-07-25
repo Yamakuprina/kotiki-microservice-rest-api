@@ -103,20 +103,6 @@ public class CatController {
         }
     }
 
-//    @GetMapping("id/owner")
-//    public ResponseEntity<Object> OwnerByCatId(@RequestParam String id) {
-//        try {
-//            Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-//            if (authorities.contains(new SimpleGrantedAuthority(UserRole.ADMIN.toString()))){
-//                return ResponseEntity.ok(catService.findOwnerByCatId(id));
-//            } else {
-//                return new ResponseEntity<>("", HttpStatus.FORBIDDEN);
-//            }
-//        } catch (Exception e) {
-//            return ResponseEntity.badRequest().body(e.getMessage());
-//        }
-//    }
-
     @GetMapping("color")
     public ResponseEntity<Object> CatsWithCatColor(@RequestParam CatColor color) {
         try {
@@ -146,21 +132,6 @@ public class CatController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-
-//    @PostMapping("id/owner")
-//    public ResponseEntity<Object> setOwnerById(@RequestParam String catId, @RequestParam String ownerId) {
-//        try {
-//            Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-//            if (authorities.contains(new SimpleGrantedAuthority(UserRole.ADMIN.toString()))){
-//                catService.setOwnerById(catId, ownerId);
-//                return ResponseEntity.ok("Successfully set new owner.");
-//            } else {
-//                return new ResponseEntity<>("", HttpStatus.FORBIDDEN);
-//            }
-//        } catch (Exception e) {
-//            return ResponseEntity.badRequest().body(e.getMessage());
-//        }
-//    }
 
     @DeleteMapping("id")
     public ResponseEntity<Object> delete(@RequestParam String id) {

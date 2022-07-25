@@ -12,25 +12,6 @@ import java.util.List;
 
 @Service
 public class UserStorageServiceImpl implements UserStorageService {
-//    @Override
-//    public void saveUser(UserDto userDto) {
-//
-//    }
-//
-//    @Override
-//    public void deleteUser(String userId) {
-//
-//    }
-//
-//    @Override
-//    public List<UserDto> getAllUsers() {
-//        return null;
-//    }
-//
-//    @Override
-//    public void setOwnerToUser(String userId, String ownerId) {
-//
-//    }
 
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
     @Autowired
@@ -56,15 +37,6 @@ public class UserStorageServiceImpl implements UserStorageService {
         List<User> allUsers = userRepository.findAll();
         return usersToUserDtos(allUsers);
     }
-
-//    @Override
-//    public void setOwnerToUser(String userId, String ownerId) throws Exception {
-//        User user = userRepository.findById(userId).orElseThrow();
-//        Owner owner = ownerService.getOwnerById(ownerId);
-//        if (owner==null) throw new Exception("Owner not found");
-//        user.setOwner(owner);
-//        userRepository.save(user);
-//    }
 
     private List<UserDto> usersToUserDtos(List<User> users) {
         List<UserDto> userDtos = new ArrayList<>();

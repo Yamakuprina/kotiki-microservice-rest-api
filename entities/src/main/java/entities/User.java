@@ -4,9 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.*;
-
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.util.UUID;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,17 +28,15 @@ public class User {
     private String role;
     @Column(name = "enabled")
     private boolean enabled;
-//    @OneToOne
-//    @JoinColumn(name = "owner_id")
-//    private Owner owner;
+    @Column(name = "owner_id")
     private String ownerId;
 
     public User(UserDto userDto) {
-        this.id =  UUID.randomUUID().toString();
+        this.id = UUID.randomUUID().toString();
         this.username = userDto.getUsername();
         this.password = userDto.getPassword();
         this.role = userDto.getRole();
         this.enabled = userDto.isEnabled();
-        this.ownerId=userDto.getOwnerId();
+        this.ownerId = userDto.getOwnerId();
     }
 }

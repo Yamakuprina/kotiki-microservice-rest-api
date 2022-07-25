@@ -20,12 +20,12 @@ public class OwnersMQListener {
     }
 
     @RabbitListener(queues = MQConfig.OWNERS_QUEUE_ID)
-    public OwnerDto findById(String id){
+    public OwnerDto findById(String id) {
         return ownerService.findById(id);
     }
 
     @RabbitListener(queues = MQConfig.OWNERS_QUEUE_SAVE)
-    public String save(OwnerDto ownerDto){
+    public String save(OwnerDto ownerDto) {
         try {
             ownerService.save(ownerDto);
             return "OK";
@@ -35,7 +35,7 @@ public class OwnersMQListener {
     }
 
     @RabbitListener(queues = MQConfig.OWNERS_QUEUE_DELETE)
-    public String delete(String id){
+    public String delete(String id) {
         try {
             ownerService.delete(id);
             return "OK";
@@ -45,7 +45,7 @@ public class OwnersMQListener {
     }
 
     @RabbitListener(queues = MQConfig.OWNERS_QUEUE_ALL)
-    public List<OwnerDto> getAllOwners(String all){
+    public List<OwnerDto> getAllOwners(String all) {
         return ownerService.getAllOwners();
     }
 

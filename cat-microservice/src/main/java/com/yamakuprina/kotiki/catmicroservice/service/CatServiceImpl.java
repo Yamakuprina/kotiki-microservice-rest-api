@@ -1,11 +1,11 @@
 package com.yamakuprina.kotiki.catmicroservice.service;
 
+import com.yamakuprina.kotiki.catmicroservice.repository.CatRepository;
 import entities.Cat;
 import entities.CatColor;
 import entities.CatDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.yamakuprina.kotiki.catmicroservice.repository.CatRepository;
 
 import java.util.ArrayList;
 import java.util.List;

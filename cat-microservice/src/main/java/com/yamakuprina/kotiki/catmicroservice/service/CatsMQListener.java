@@ -21,17 +21,17 @@ public class CatsMQListener {
     }
 
     @RabbitListener(queues = MQConfig.CATS_QUEUE_ALL)
-    public List<CatDto> getAllCats(String all){
+    public List<CatDto> getAllCats(String all) {
         return catService.getAllCats();
     }
 
     @RabbitListener(queues = MQConfig.CATS_QUEUE_ID)
-    public CatDto findById(String id){
+    public CatDto findById(String id) {
         return catService.findById(id);
     }
 
     @RabbitListener(queues = MQConfig.CATS_QUEUE_SAVE)
-    public String save(CatDto cat) throws Exception{
+    public String save(CatDto cat) throws Exception {
         try {
             catService.save(cat);
             return "OK";
@@ -41,7 +41,7 @@ public class CatsMQListener {
     }
 
     @RabbitListener(queues = MQConfig.CATS_QUEUE_DELETE)
-    public String delete(String id){
+    public String delete(String id) {
         try {
             catService.delete(id);
             return "OK";
@@ -51,17 +51,17 @@ public class CatsMQListener {
     }
 
     @RabbitListener(queues = MQConfig.CATS_QUEUE_COLOR)
-    public List<CatDto> getCatsWithCatColor(CatColor color){
+    public List<CatDto> getCatsWithCatColor(CatColor color) {
         return catService.getCatsWithCatColor(color);
     }
 
     @RabbitListener(queues = MQConfig.CATS_QUEUE_FRIENDS)
-    public List<CatDto> getFriendsById(String id){
+    public List<CatDto> getFriendsById(String id) {
         return catService.getFriendsById(id);
     }
 
     @RabbitListener(queues = MQConfig.CATS_QUEUE_ADD_FRIEND)
-    public String addCatToFriends(List<String> list){
+    public String addCatToFriends(List<String> list) {
         try {
             catService.addCatToFriends(list.get(0), list.get(1));
             return "OK";
@@ -71,7 +71,7 @@ public class CatsMQListener {
     }
 
     @RabbitListener(queues = MQConfig.CATS_QUEUE_DELETE_FRIEND)
-    public String deleteCatFromFriends(List<String> list){
+    public String deleteCatFromFriends(List<String> list) {
         try {
             catService.deleteCatFromFriends(list.get(0), list.get(1));
             return "OK";

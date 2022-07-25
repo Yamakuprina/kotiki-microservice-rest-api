@@ -23,16 +23,6 @@ public class AdminController {
         }
     }
 
-//    @PostMapping("/users/owner")
-//    public ResponseEntity<Object> setOwnerToUser(@RequestParam String userId, @RequestParam String ownerId) {
-//        try {
-//            userStorageService.setOwnerToUser(userId, ownerId);
-//            return ResponseEntity.ok("Owner successfully set to user.");
-//        } catch (Exception e) {
-//            return ResponseEntity.badRequest().body(e.getMessage());
-//        }
-//    }
-
     @GetMapping("/users/all")
     public ResponseEntity<Object> allUsers() {
         try {

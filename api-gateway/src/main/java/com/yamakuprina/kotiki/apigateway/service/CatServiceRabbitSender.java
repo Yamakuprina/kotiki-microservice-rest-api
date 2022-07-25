@@ -1,6 +1,5 @@
 package com.yamakuprina.kotiki.apigateway.service;
 
-
 import com.yamakuprina.kotiki.apigateway.config.Queues;
 import com.yamakuprina.kotiki.apigateway.userDetails.KotikiUserDetails;
 import entities.CatColor;

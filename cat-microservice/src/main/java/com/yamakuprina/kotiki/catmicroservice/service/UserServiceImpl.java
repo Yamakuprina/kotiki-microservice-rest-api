@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService {
         Cat friend = catRepository.findById(friendId).orElseThrow();
         cat.addFriend(friend);
         friend.addFriend(cat);
-        catRepository.saveAll(List.of(cat,friend));
+        catRepository.saveAll(List.of(cat, friend));
     }
 
     @Override
@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
         Cat friend = catRepository.findById(friendId).orElseThrow();
         cat.deleteFriend(friend);
         friend.deleteFriend(cat);
-        catRepository.saveAll(List.of(cat,friend));
+        catRepository.saveAll(List.of(cat, friend));
     }
 
     @Override

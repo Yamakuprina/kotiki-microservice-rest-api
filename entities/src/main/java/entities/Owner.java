@@ -3,10 +3,11 @@ package entities;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 @NoArgsConstructor
@@ -20,27 +21,16 @@ public class Owner {
     private String id;
     @Column(name = "birth_date")
     private Date birthDate;
-    //@OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
-    //@OneToMany(mappedBy = "owner_id", cascade = CascadeType.ALL)
-    //private List<Cat> cats;
 
     public Owner(String name, Date birthDate) {
         this.name = name;
         this.id = UUID.randomUUID().toString();
         this.birthDate = birthDate;
-        //this.cats = new ArrayList<Cat>();
     }
 
-    public Owner(OwnerDto ownerDto){
+    public Owner(OwnerDto ownerDto) {
         this.name = ownerDto.getName();
-        this.id = ownerDto.getId()==null? UUID.randomUUID().toString() : ownerDto.getId();
+        this.id = ownerDto.getId() == null ? UUID.randomUUID().toString() : ownerDto.getId();
         this.birthDate = ownerDto.getBirthDate();
     }
-
-    //public void addCat(Cat cat) {
-    //    cats.add(cat);
-    //}
-    //public void removeCat(Cat cat) {
-    //    cats.remove(cat);
-    //}
 }

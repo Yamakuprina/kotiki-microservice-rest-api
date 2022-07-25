@@ -24,13 +24,6 @@ public class CatDto implements Serializable {
 
     private String ownerId;
 
-//    public CatDto(String name, Date birthDate, String breed, CatColor color) {
-//        this.name = name;
-//        this.birthDate = birthDate;
-//        this.breed = breed;
-//        this.color = color;
-//    }
-
     public CatDto(Cat cat) {
         id = cat.getId();
         name = cat.getName();
