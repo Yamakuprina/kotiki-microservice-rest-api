@@ -25,15 +25,23 @@ public class OwnersMQListener {
     }
 
     @RabbitListener(queues = MQConfig.OWNERS_QUEUE_SAVE)
-    public String save(OwnerDto ownerDto) throws Exception{
-        ownerService.save(ownerDto);
-        return "OK";
+    public String save(OwnerDto ownerDto){
+        try {
+            ownerService.save(ownerDto);
+            return "OK";
+        } catch (Exception e) {
+            return "BAD_REQUEST";
+        }
     }
 
     @RabbitListener(queues = MQConfig.OWNERS_QUEUE_DELETE)
-    public String delete(String id) throws Exception{
-        ownerService.delete(id);
-        return "OK";
+    public String delete(String id){
+        try {
+            ownerService.delete(id);
+            return "OK";
+        } catch (Exception e) {
+            return "BAD_REQUEST";
+        }
     }
 
     @RabbitListener(queues = MQConfig.OWNERS_QUEUE_ALL)

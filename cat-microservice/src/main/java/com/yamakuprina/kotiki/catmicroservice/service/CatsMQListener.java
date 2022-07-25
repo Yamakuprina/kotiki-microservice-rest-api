@@ -32,14 +32,22 @@ public class CatsMQListener {
 
     @RabbitListener(queues = MQConfig.CATS_QUEUE_SAVE)
     public String save(CatDto cat) throws Exception{
-        catService.save(cat);
-        return "OK";
+        try {
+            catService.save(cat);
+            return "OK";
+        } catch (Exception e) {
+            return "BAD_REQUEST";
+        }
     }
 
     @RabbitListener(queues = MQConfig.CATS_QUEUE_DELETE)
     public String delete(String id){
-        catService.delete(id);
-        return "OK";
+        try {
+            catService.delete(id);
+            return "OK";
+        } catch (Exception e) {
+            return "BAD_REQUEST";
+        }
     }
 
     @RabbitListener(queues = MQConfig.CATS_QUEUE_COLOR)
@@ -54,13 +62,21 @@ public class CatsMQListener {
 
     @RabbitListener(queues = MQConfig.CATS_QUEUE_ADD_FRIEND)
     public String addCatToFriends(List<String> list){
-        catService.addCatToFriends(list.get(0), list.get(1));
-        return "OK";
+        try {
+            catService.addCatToFriends(list.get(0), list.get(1));
+            return "OK";
+        } catch (Exception e) {
+            return "BAD_REQUEST";
+        }
     }
 
     @RabbitListener(queues = MQConfig.CATS_QUEUE_DELETE_FRIEND)
     public String deleteCatFromFriends(List<String> list){
-        catService.deleteCatFromFriends(list.get(0), list.get(1));
-        return "OK";
+        try {
+            catService.deleteCatFromFriends(list.get(0), list.get(1));
+            return "OK";
+        } catch (Exception e) {
+            return "BAD_REQUEST";
+        }
     }
 }

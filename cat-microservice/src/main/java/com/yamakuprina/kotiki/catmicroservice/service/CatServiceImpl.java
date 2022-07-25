@@ -25,7 +25,7 @@ public class CatServiceImpl implements CatService {
     }
 
     @Override
-    public void addCatToFriends(String id, String friendId) {
+    public void addCatToFriends(String id, String friendId) throws Exception {
         Cat cat = catRepository.findById(id).orElseThrow();
         Cat friend = catRepository.findById(id).orElseThrow();
         cat.addFriend(friend);
@@ -33,7 +33,7 @@ public class CatServiceImpl implements CatService {
     }
 
     @Override
-    public void deleteCatFromFriends(String id, String friendId) {
+    public void deleteCatFromFriends(String id, String friendId) throws Exception {
         Cat cat = catRepository.findById(id).orElseThrow();
         Cat friend = catRepository.findById(id).orElseThrow();
         cat.deleteFriend(friend);
@@ -61,7 +61,7 @@ public class CatServiceImpl implements CatService {
     }
 
     @Override
-    public void delete(String id) {
+    public void delete(String id) throws Exception {
         catRepository.deleteById(id);
     }
 

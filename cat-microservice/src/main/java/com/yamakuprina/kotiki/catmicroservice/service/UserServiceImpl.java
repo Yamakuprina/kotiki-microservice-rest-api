@@ -21,22 +21,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addCatToFriends(String id, String friendId, String userOwnerId) {
+    public void addCatToFriends(String id, String friendId, String userOwnerId) throws Exception {
         Cat cat = catRepository.findById(id).orElseThrow();
-        if (!Objects.equals(cat.getOwnerId(), userOwnerId)) return;
-        Cat friend = catRepository.findById(id).orElseThrow();
+        if (!Objects.equals(cat.getOwnerId(), userOwnerId)) throw new Exception();
+        Cat friend = catRepository.findById(friendId).orElseThrow();
         cat.addFriend(friend);
         friend.addFriend(cat);
         catRepository.saveAll(List.of(cat,friend));
     }
 
     @Override
-    public void deleteCatFromFriends(String id, String friendId, String userOwnerId) {
+    public void deleteCatFromFriends(String id, String friendId, String userOwnerId) throws Exception {
         Cat cat = catRepository.findById(id).orElseThrow();
-        if (!Objects.equals(cat.getOwnerId(), userOwnerId)) return;
-        Cat friend = catRepository.findById(id).orElseThrow();
+        if (!Objects.equals(cat.getOwnerId(), userOwnerId)) throw new Exception();
+        Cat friend = catRepository.findById(friendId).orElseThrow();
         cat.deleteFriend(friend);
-        catRepository.save(cat);
+        friend.deleteFriend(cat);
+        catRepository.saveAll(List.of(cat,friend));
     }
 
     @Override

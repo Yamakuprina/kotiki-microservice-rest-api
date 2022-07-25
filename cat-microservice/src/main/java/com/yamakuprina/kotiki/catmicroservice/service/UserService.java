@@ -11,9 +11,9 @@ public interface UserService {
 
     List<CatDto> getCatsWithCatColor(CatColor color, String userOwnerId);
 
-    void addCatToFriends(String id, String friendId, String userOwnerId);
+    void addCatToFriends(String id, String friendId, String userOwnerId) throws Exception;
 
     List<CatDto> getFriendsByCatId(String catId);
 
-    void deleteCatFromFriends(String id, String friendId, String userOwnerId);
+    void deleteCatFromFriends(String id, String friendId, String userOwnerId) throws Exception;
 }

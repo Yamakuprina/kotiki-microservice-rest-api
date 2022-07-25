@@ -32,8 +32,8 @@ public class Cat {
 //    private Owner owner;
     @Column(name = "owner_id")
     private String ownerId;
-    @OneToMany(mappedBy = "id", fetch = FetchType.EAGER)
-    private List<Cat> friends = new ArrayList<>();
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<Cat> friends;
 
     public Cat(CatDto catDto) {
         this.name = catDto.getName();

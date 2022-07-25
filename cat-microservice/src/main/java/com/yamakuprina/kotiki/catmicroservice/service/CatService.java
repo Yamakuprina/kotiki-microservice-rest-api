@@ -12,13 +12,13 @@ public interface CatService {
 
     void save(CatDto cat) throws Exception;
 
-    void delete(String id);
+    void delete(String id) throws Exception;
 
     List<CatDto> getCatsWithCatColor(CatColor color);
 
     List<CatDto> getFriendsById(String id);
 
-    void addCatToFriends(String id, String friendId);
+    void addCatToFriends(String id, String friendId) throws Exception;
 
-    void deleteCatFromFriends(String id, String friendId);
+    void deleteCatFromFriends(String id, String friendId) throws Exception;
 }
