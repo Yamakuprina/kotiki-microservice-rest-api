@@ -25,10 +25,10 @@ public class OwnerDto implements Serializable {
 //        this.birthDate = birthDate;
 //    }
 
-//    public OwnerDto(Owner owner) {
-//        name = owner.getName();
-//        birthDate = owner.getBirthDate();
-//        //cats = owner.getCats();
-//        id = owner.getId();
-//    }
+    public OwnerDto(Owner owner) {
+        name = owner.getName();
+        birthDate = owner.getBirthDate();
+        //cats = owner.getCats();
+        id = owner.getId();
+    }
 }

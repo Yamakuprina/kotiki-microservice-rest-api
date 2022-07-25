@@ -37,7 +37,12 @@ public class CatServiceRabbitSender implements CatService {
 
     @Override
     public CatDto findById(String id) {
-        return null;
+        return template.convertSendAndReceiveAsType(
+                Queues.EXCHANGE,
+                Queues.ROUTING_KEY + Queues.CATS_QUEUE_ID,
+                id,
+                ParameterizedTypeReference.forType(CatDto.class)
+        );
     }
 
     @Override
@@ -54,11 +59,11 @@ public class CatServiceRabbitSender implements CatService {
 
     @Override
     public void delete(String id) throws Exception {
-        if (
-                template.convertSendAndReceiveAsType(Queues.EXCHANGE,
-                        Queues.ROUTING_KEY + Queues.CATS_QUEUE_DELETE,
-                        id,
-                        ParameterizedTypeReference.forType(String.class)) != "OK") throw new Exception();
+        String response = template.convertSendAndReceiveAsType(Queues.EXCHANGE,
+                Queues.ROUTING_KEY + Queues.CATS_QUEUE_DELETE,
+                id,
+                ParameterizedTypeReference.forType(String.class));
+        if (!Objects.equals(response, "OK")) throw new Exception();
     }
 
     @Override
@@ -80,20 +85,20 @@ public class CatServiceRabbitSender implements CatService {
     @Override
     public void addCatToFriends(String id, String friendId) throws Exception {
         List<String> list = List.of(id, friendId);
-        if (
-                template.convertSendAndReceiveAsType(Queues.EXCHANGE,
-                        Queues.ROUTING_KEY + Queues.CATS_QUEUE_ADD_FRIEND,
-                        list,
-                        ParameterizedTypeReference.forType(String.class)) != "OK") throw new Exception();
+        String response = template.convertSendAndReceiveAsType(Queues.EXCHANGE,
+                Queues.ROUTING_KEY + Queues.CATS_QUEUE_ADD_FRIEND,
+                list,
+                ParameterizedTypeReference.forType(String.class));
+        if (!Objects.equals(response, "OK")) throw new Exception();
     }
 
     @Override
     public void deleteCatFromFriends(String id, String friendId) throws Exception {
         List<String> list = List.of(id, friendId);
-        if (
-                template.convertSendAndReceiveAsType(Queues.EXCHANGE,
-                        Queues.ROUTING_KEY + Queues.CATS_QUEUE_DELETE_FRIEND,
-                        list,
-                        ParameterizedTypeReference.forType(String.class)) != "OK") throw new Exception();
+        String response = template.convertSendAndReceiveAsType(Queues.EXCHANGE,
+                Queues.ROUTING_KEY + Queues.CATS_QUEUE_DELETE_FRIEND,
+                list,
+                ParameterizedTypeReference.forType(String.class));
+        if (!Objects.equals(response, "OK")) throw new Exception();
     }
 }

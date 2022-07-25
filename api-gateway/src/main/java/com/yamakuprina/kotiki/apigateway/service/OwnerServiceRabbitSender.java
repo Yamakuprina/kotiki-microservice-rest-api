@@ -10,6 +10,7 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class OwnerServiceRabbitSender implements OwnerService {
@@ -32,20 +33,20 @@ public class OwnerServiceRabbitSender implements OwnerService {
 
     @Override
     public void save(OwnerDto ownerDto) throws Exception {
-        if (
-                template.convertSendAndReceiveAsType(Queues.EXCHANGE,
-                        Queues.ROUTING_KEY + Queues.OWNERS_QUEUE_SAVE,
-                        ownerDto,
-                        ParameterizedTypeReference.forType(String.class)) != "OK") throw new Exception();
+        String response = template.convertSendAndReceiveAsType(Queues.EXCHANGE,
+                Queues.ROUTING_KEY + Queues.OWNERS_QUEUE_SAVE,
+                ownerDto,
+                ParameterizedTypeReference.forType(String.class));
+        if (!Objects.equals(response, "OK")) throw new Exception();
     }
 
     @Override
     public void delete(String id) throws Exception {
-        if (
-                template.convertSendAndReceiveAsType(Queues.EXCHANGE,
-                        Queues.ROUTING_KEY + Queues.OWNERS_QUEUE_DELETE,
-                        id,
-                        ParameterizedTypeReference.forType(String.class)) != "OK") throw new Exception();
+        String response = template.convertSendAndReceiveAsType(Queues.EXCHANGE,
+                Queues.ROUTING_KEY + Queues.OWNERS_QUEUE_DELETE,
+                id,
+                ParameterizedTypeReference.forType(String.class)) ;
+        if (!Objects.equals(response, "OK")) throw new Exception("Couldnt delete");
     }
 
     @Override

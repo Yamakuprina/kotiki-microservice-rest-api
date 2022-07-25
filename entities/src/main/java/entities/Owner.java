@@ -31,6 +31,12 @@ public class Owner {
         //this.cats = new ArrayList<Cat>();
     }
 
+    public Owner(OwnerDto ownerDto){
+        this.name = ownerDto.getName();
+        this.id = ownerDto.getId()==null? UUID.randomUUID().toString() : ownerDto.getId();
+        this.birthDate = ownerDto.getBirthDate();
+    }
+
     //public void addCat(Cat cat) {
     //    cats.add(cat);
     //}

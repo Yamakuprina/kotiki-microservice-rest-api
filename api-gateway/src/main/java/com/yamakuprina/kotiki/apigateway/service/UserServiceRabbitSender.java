@@ -9,6 +9,7 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class UserServiceRabbitSender implements UserService {
@@ -43,11 +44,11 @@ public class UserServiceRabbitSender implements UserService {
     @Override
     public void addCatToFriends(String id, String friendId, String userOwnerId) throws Exception {
         List<String> list = List.of(id, friendId, userOwnerId);
-        if (
-                template.convertSendAndReceiveAsType(Queues.EXCHANGE,
-                        Queues.ROUTING_KEY + Queues.CATS_QUEUE_ADD_FRIEND,
-                        list,
-                        ParameterizedTypeReference.forType(String.class)) != "OK") throw new Exception();
+        String response = template.convertSendAndReceiveAsType(Queues.EXCHANGE,
+                Queues.ROUTING_KEY + Queues.CATS_QUEUE_ADD_FRIEND,
+                list,
+                ParameterizedTypeReference.forType(String.class));
+        if (!Objects.equals(response, "OK")) throw new Exception();
     }
 
     @Override
@@ -63,10 +64,10 @@ public class UserServiceRabbitSender implements UserService {
     @Override
     public void deleteCatFromFriends(String id, String friendId, String userOwnerId) throws Exception {
         List<String> list = List.of(id, friendId, userOwnerId);
-        if (
-                template.convertSendAndReceiveAsType(Queues.EXCHANGE,
-                        Queues.ROUTING_KEY + Queues.CATS_QUEUE_DELETE_FRIEND,
-                        list,
-                        ParameterizedTypeReference.forType(String.class)) != "OK") throw new Exception();
+        String response = template.convertSendAndReceiveAsType(Queues.EXCHANGE,
+                Queues.ROUTING_KEY + Queues.CATS_QUEUE_DELETE_FRIEND,
+                list,
+                ParameterizedTypeReference.forType(String.class));
+        if (!Objects.equals(response, "OK")) throw new Exception();
     }
 }
