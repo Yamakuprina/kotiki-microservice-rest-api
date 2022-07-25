@@ -17,28 +17,28 @@ public class UserMQListener {
         this.userService = userService;
     }
 
-    @RabbitListener(queues = MQConfig.CATS_QUEUE_ALL)
+    @RabbitListener(queues = MQConfig.USER_QUEUE_CATS_ALL)
     public List<CatDto> UserGetAllCats(String userOwnerId){
         return userService.getAllCats(userOwnerId);
     }
 
-    @RabbitListener(queues = MQConfig.CATS_QUEUE_COLOR)
+    @RabbitListener(queues = MQConfig.USER_QUEUE_CATS_COLOR)
     public List<CatDto> getCatsWithCatColor(CatColor color, String userOwnerId){
         return userService.getCatsWithCatColor(color, userOwnerId);
     }
 
-    @RabbitListener(queues = MQConfig.CATS_QUEUE_FRIENDS)
+    @RabbitListener(queues = MQConfig.USER_QUEUE_CATS_FRIENDS)
     public List<CatDto> getFriendsById(String id){
         return userService.getFriendsByCatId(id);
     }
 
-    @RabbitListener(queues = MQConfig.CATS_QUEUE_ADD_FRIEND)
+    @RabbitListener(queues = MQConfig.USER_QUEUE_CATS_ADD_FRIEND)
     public String addCatToFriends(String id, String friendId, String userOwnerId){
         userService.addCatToFriends(id, friendId, userOwnerId);
         return "OK";
     }
 
-    @RabbitListener(queues = MQConfig.CATS_QUEUE_DELETE_FRIEND)
+    @RabbitListener(queues = MQConfig.USER_QUEUE_CATS_DELETE_FRIEND)
     public String deleteCatFromFriends(String id, String friendId, String userOwnerId){
         userService.deleteCatFromFriends(id, friendId, userOwnerId);
         return "OK";

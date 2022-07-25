@@ -19,6 +19,11 @@ public class Queues {
     public static final String CATS_QUEUE_FRIENDS = "cat_friends";
     public static final String CATS_QUEUE_ADD_FRIEND = "cat_add_friend";
     public static final String CATS_QUEUE_DELETE_FRIEND = "cat_delete_friend";
+    public static final String USER_QUEUE_CATS_ALL = "user_all";
+    public static final String USER_QUEUE_CATS_COLOR = "user_color";
+    public static final String USER_QUEUE_CATS_FRIENDS = "user_friends";
+    public static final String USER_QUEUE_CATS_ADD_FRIEND = "user_add_friend";
+    public static final String USER_QUEUE_CATS_DELETE_FRIEND = "user_delete_friend";
     public static final String OWNERS_QUEUE_ALL = "owners_all";
     public static final String OWNERS_QUEUE_ID = "owners_id";
     public static final String OWNERS_QUEUE_SAVE = "owners_save";
@@ -27,6 +32,56 @@ public class Queues {
     @Bean
     public TopicExchange exchange() {
         return new TopicExchange(EXCHANGE);
+    }
+
+    @Bean
+    public Queue queueUserAllCats() {
+        return new Queue(USER_QUEUE_CATS_ALL);
+    }
+
+    @Bean
+    public Binding bindingUserAllCats(Queue queueUserAllCats, TopicExchange topicExchange) {
+        return BindingBuilder.bind(queueUserAllCats).to(topicExchange).with(ROUTING_KEY + USER_QUEUE_CATS_ALL);
+    }
+
+    @Bean
+    public Queue queueUserCatsColor() {
+        return new Queue(USER_QUEUE_CATS_COLOR);
+    }
+
+    @Bean
+    public Binding bindingUserCatsColor(Queue queueUserCatsColor, TopicExchange topicExchange) {
+        return BindingBuilder.bind(queueUserCatsColor).to(topicExchange).with(ROUTING_KEY + USER_QUEUE_CATS_COLOR);
+    }
+
+    @Bean
+    public Queue queueUserCatsFriends() {
+        return new Queue(USER_QUEUE_CATS_FRIENDS);
+    }
+
+    @Bean
+    public Binding bindingUserCatsFriends(Queue queueUserCatsFriends, TopicExchange topicExchange) {
+        return BindingBuilder.bind(queueUserCatsFriends).to(topicExchange).with(ROUTING_KEY + USER_QUEUE_CATS_FRIENDS);
+    }
+
+    @Bean
+    public Queue queueUserCatsAddFriends() {
+        return new Queue(USER_QUEUE_CATS_ADD_FRIEND);
+    }
+
+    @Bean
+    public Binding bindingUserCatsAddFriends(Queue queueUserCatsAddFriends, TopicExchange topicExchange) {
+        return BindingBuilder.bind(queueUserCatsAddFriends).to(topicExchange).with(ROUTING_KEY + USER_QUEUE_CATS_ADD_FRIEND);
+    }
+
+    @Bean
+    public Queue queueUserCatsDeleteFriends() {
+        return new Queue(USER_QUEUE_CATS_DELETE_FRIEND);
+    }
+
+    @Bean
+    public Binding bindingUserCatsDeleteFriends(Queue queueUserCatsDeleteFriends, TopicExchange topicExchange) {
+        return BindingBuilder.bind(queueUserCatsDeleteFriends).to(topicExchange).with(ROUTING_KEY + USER_QUEUE_CATS_DELETE_FRIEND);
     }
 
     @Bean

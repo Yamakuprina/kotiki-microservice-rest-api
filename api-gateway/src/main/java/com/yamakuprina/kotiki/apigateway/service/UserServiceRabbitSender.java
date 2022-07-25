@@ -24,7 +24,7 @@ public class UserServiceRabbitSender implements UserService {
     public List<CatDto> getAllCats(String userOwnerId) {
         return template.convertSendAndReceiveAsType(
                 Queues.EXCHANGE,
-                Queues.ROUTING_KEY + Queues.CATS_QUEUE_ALL,
+                Queues.ROUTING_KEY + Queues.USER_QUEUE_CATS_ALL,
                 userOwnerId,
                 ParameterizedTypeReference.forType(List.class)
         );
@@ -35,7 +35,7 @@ public class UserServiceRabbitSender implements UserService {
         List<String> list = List.of(color.toString(), userOwnerId);
         return template.convertSendAndReceiveAsType(
                 Queues.EXCHANGE,
-                Queues.ROUTING_KEY + Queues.CATS_QUEUE_COLOR,
+                Queues.ROUTING_KEY + Queues.USER_QUEUE_CATS_COLOR,
                 list,
                 ParameterizedTypeReference.forType(List.class)
         );
@@ -45,7 +45,7 @@ public class UserServiceRabbitSender implements UserService {
     public void addCatToFriends(String id, String friendId, String userOwnerId) throws Exception {
         List<String> list = List.of(id, friendId, userOwnerId);
         String response = template.convertSendAndReceiveAsType(Queues.EXCHANGE,
-                Queues.ROUTING_KEY + Queues.CATS_QUEUE_ADD_FRIEND,
+                Queues.ROUTING_KEY + Queues.USER_QUEUE_CATS_ADD_FRIEND,
                 list,
                 ParameterizedTypeReference.forType(String.class));
         if (!Objects.equals(response, "OK")) throw new Exception();
@@ -55,7 +55,7 @@ public class UserServiceRabbitSender implements UserService {
     public List<CatDto> getFriendsByCatId(String catId) {
         return template.convertSendAndReceiveAsType(
                 Queues.EXCHANGE,
-                Queues.ROUTING_KEY + Queues.CATS_QUEUE_FRIENDS,
+                Queues.ROUTING_KEY + Queues.USER_QUEUE_CATS_FRIENDS,
                 catId,
                 ParameterizedTypeReference.forType(List.class)
         );
@@ -65,7 +65,7 @@ public class UserServiceRabbitSender implements UserService {
     public void deleteCatFromFriends(String id, String friendId, String userOwnerId) throws Exception {
         List<String> list = List.of(id, friendId, userOwnerId);
         String response = template.convertSendAndReceiveAsType(Queues.EXCHANGE,
-                Queues.ROUTING_KEY + Queues.CATS_QUEUE_DELETE_FRIEND,
+                Queues.ROUTING_KEY + Queues.USER_QUEUE_CATS_DELETE_FRIEND,
                 list,
                 ParameterizedTypeReference.forType(String.class));
         if (!Objects.equals(response, "OK")) throw new Exception();
