@@ -26,7 +26,8 @@ public class UserServiceImpl implements UserService {
         if (!Objects.equals(cat.getOwnerId(), userOwnerId)) return;
         Cat friend = catRepository.findById(id).orElseThrow();
         cat.addFriend(friend);
-        catRepository.save(cat);
+        friend.addFriend(cat);
+        catRepository.saveAll(List.of(cat,friend));
     }
 
     @Override

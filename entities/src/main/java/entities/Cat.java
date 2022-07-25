@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,8 +32,8 @@ public class Cat {
 //    private Owner owner;
     @Column(name = "owner_id")
     private String ownerId;
-    @OneToMany(mappedBy = "id")
-    private List<Cat> friends;
+    @OneToMany(mappedBy = "id", fetch = FetchType.EAGER)
+    private List<Cat> friends = new ArrayList<>();
 
     public Cat(CatDto catDto) {
         this.name = catDto.getName();

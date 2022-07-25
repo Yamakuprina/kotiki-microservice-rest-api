@@ -23,8 +23,8 @@ public class UserMQListener {
     }
 
     @RabbitListener(queues = MQConfig.USER_QUEUE_CATS_COLOR)
-    public List<CatDto> getCatsWithCatColor(CatColor color, String userOwnerId){
-        return userService.getCatsWithCatColor(color, userOwnerId);
+    public List<CatDto> getCatsWithCatColor(List<String> list){
+        return userService.getCatsWithCatColor(CatColor.valueOf(list.get(0)), list.get(1));
     }
 
     @RabbitListener(queues = MQConfig.USER_QUEUE_CATS_FRIENDS)
@@ -33,14 +33,22 @@ public class UserMQListener {
     }
 
     @RabbitListener(queues = MQConfig.USER_QUEUE_CATS_ADD_FRIEND)
-    public String addCatToFriends(String id, String friendId, String userOwnerId){
-        userService.addCatToFriends(id, friendId, userOwnerId);
-        return "OK";
+    public String addCatToFriends(List<String> list){
+        try {
+            userService.addCatToFriends(list.get(0), list.get(1), list.get(2));
+            return "OK";
+        } catch (Exception e){
+            return "BAD_REQUEST";
+        }
     }
 
     @RabbitListener(queues = MQConfig.USER_QUEUE_CATS_DELETE_FRIEND)
-    public String deleteCatFromFriends(String id, String friendId, String userOwnerId){
-        userService.deleteCatFromFriends(id, friendId, userOwnerId);
-        return "OK";
+    public String deleteCatFromFriends(List<String> list){
+        try {
+            userService.deleteCatFromFriends(list.get(0), list.get(1), list.get(2));
+            return "OK";
+        } catch (Exception e){
+            return "BAD_REQUEST";
+        }
     }
 }
