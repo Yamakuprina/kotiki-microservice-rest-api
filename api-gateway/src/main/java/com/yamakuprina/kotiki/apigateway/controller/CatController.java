@@ -1,5 +1,9 @@
-package controller;
+package com.yamakuprina.kotiki.apigateway.controller;
 
+import com.yamakuprina.kotiki.apigateway.service.CatService;
+import com.yamakuprina.kotiki.apigateway.service.UserService;
+import com.yamakuprina.kotiki.apigateway.userDetails.KotikiUserDetails;
+import com.yamakuprina.kotiki.apigateway.userDetails.UserRole;
 import entities.CatColor;
 import entities.CatDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +13,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-import service.CatService;
-import service.UserService;
-import userDetails.UserRole;
 
 import java.util.Collection;
 
@@ -29,10 +30,11 @@ public class CatController {
     public ResponseEntity<Object> AllCats() {
         try {
             Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-            if (authorities.contains(new SimpleGrantedAuthority(UserRole.ADMIN.toString()))){
+            if (authorities.contains(new SimpleGrantedAuthority(UserRole.ADMIN.toString()))) {
                 return ResponseEntity.ok(catService.getAllCats());
             } else {
-                return ResponseEntity.ok(userService.getAllCats());
+                String userOwnerId = ((KotikiUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getOwnerId();
+                return ResponseEntity.ok(userService.getAllCats(userOwnerId));
             }
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -43,7 +45,7 @@ public class CatController {
     public ResponseEntity<Object> findById(@RequestParam String id) {
         try {
             Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-            if (authorities.contains(new SimpleGrantedAuthority(UserRole.ADMIN.toString()))){
+            if (authorities.contains(new SimpleGrantedAuthority(UserRole.ADMIN.toString()))) {
                 return ResponseEntity.ok(catService.findById(id));
             } else {
                 return new ResponseEntity<>("", HttpStatus.FORBIDDEN);
@@ -57,7 +59,7 @@ public class CatController {
     public ResponseEntity<Object> getFriendsById(@RequestParam String id) {
         try {
             Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-            if (authorities.contains(new SimpleGrantedAuthority(UserRole.ADMIN.toString()))){
+            if (authorities.contains(new SimpleGrantedAuthority(UserRole.ADMIN.toString()))) {
                 return ResponseEntity.ok(catService.getFriendsById(id));
             } else {
                 return ResponseEntity.ok(userService.getFriendsByCatId(id));
@@ -71,11 +73,12 @@ public class CatController {
     public ResponseEntity<Object> addFriendById(@RequestParam String id, @RequestParam String friendId) {
         try {
             Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-            if (authorities.contains(new SimpleGrantedAuthority(UserRole.ADMIN.toString()))){
+            if (authorities.contains(new SimpleGrantedAuthority(UserRole.ADMIN.toString()))) {
                 catService.addCatToFriends(id, friendId);
                 return ResponseEntity.ok("Friend successfully saved.");
             } else {
-                userService.addCatToFriends(id, friendId);
+                String userOwnerId = ((KotikiUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getOwnerId();
+                userService.addCatToFriends(id, friendId, userOwnerId);
                 return ResponseEntity.ok("Friend successfully saved.");
             }
         } catch (Exception e) {
@@ -87,11 +90,12 @@ public class CatController {
     public ResponseEntity<Object> deleteFriendById(@RequestParam String id, @RequestParam String friendId) {
         try {
             Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-            if (authorities.contains(new SimpleGrantedAuthority(UserRole.ADMIN.toString()))){
+            if (authorities.contains(new SimpleGrantedAuthority(UserRole.ADMIN.toString()))) {
                 catService.deleteCatFromFriends(id, friendId);
                 return ResponseEntity.ok("Friend successfully deleted.");
             } else {
-                userService.deleteCatFromFriends(id, friendId);
+                String userOwnerId = ((KotikiUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getOwnerId();
+                userService.deleteCatFromFriends(id, friendId, userOwnerId);
                 return ResponseEntity.ok("Friend successfully deleted.");
             }
         } catch (Exception e) {
@@ -117,10 +121,11 @@ public class CatController {
     public ResponseEntity<Object> CatsWithCatColor(@RequestParam CatColor color) {
         try {
             Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-            if (authorities.contains(new SimpleGrantedAuthority(UserRole.ADMIN.toString()))){
+            if (authorities.contains(new SimpleGrantedAuthority(UserRole.ADMIN.toString()))) {
                 return ResponseEntity.ok(catService.getCatsWithCatColor(color));
             } else {
-                return ResponseEntity.ok(userService.getCatsWithCatColor(color));
+                String userOwnerId = ((KotikiUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getOwnerId();
+                return ResponseEntity.ok(userService.getCatsWithCatColor(color, userOwnerId));
             }
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -131,7 +136,7 @@ public class CatController {
     public ResponseEntity<Object> save(@RequestBody CatDto catDto) {
         try {
             Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-            if (authorities.contains(new SimpleGrantedAuthority(UserRole.ADMIN.toString()))){
+            if (authorities.contains(new SimpleGrantedAuthority(UserRole.ADMIN.toString()))) {
                 catService.save(catDto);
                 return ResponseEntity.ok("Cat successfully saved.");
             } else {
@@ -161,7 +166,7 @@ public class CatController {
     public ResponseEntity<Object> delete(@RequestParam String id) {
         try {
             Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-            if (authorities.contains(new SimpleGrantedAuthority(UserRole.ADMIN.toString()))){
+            if (authorities.contains(new SimpleGrantedAuthority(UserRole.ADMIN.toString()))) {
                 catService.delete(id);
                 return ResponseEntity.ok("Cat successfully deleted.");
             } else {

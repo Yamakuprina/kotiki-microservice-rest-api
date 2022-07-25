@@ -1,4 +1,4 @@
-package service;
+package com.yamakuprina.kotiki.apigateway.service;
 
 
 import entities.UserDto;

@@ -1,17 +1,16 @@
-package service;
+package com.yamakuprina.kotiki.apigateway.service;
 
 import entities.CatDto;
 import entities.OwnerDto;
-
 
 import java.util.List;
 
 public interface OwnerService {
     OwnerDto findById(String id);
 
-    void save(OwnerDto ownerDto);
+    void save(OwnerDto ownerDto) throws Exception;
 
-    void delete(String id);
+    void delete(String id) throws Exception;
 
     List<OwnerDto> getAllOwners();
 

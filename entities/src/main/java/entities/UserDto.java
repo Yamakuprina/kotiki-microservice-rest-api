@@ -2,20 +2,24 @@ package entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
 
 @Data
 @AllArgsConstructor
-public class UserDto {
+@NoArgsConstructor
+public class UserDto implements Serializable {
 
-    private final String id;
+    private String id;
 
-    private final String username;
+    private String username;
 
-    private final String password;
+    private String password;
 
-    private final String role;
+    private String role;
 
-    private final boolean enabled;
+    private boolean enabled;
 
     private String ownerId;
 

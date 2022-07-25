@@ -2,22 +2,25 @@ package entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.sql.Date;
 
+@NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class CatDto {
+public class CatDto implements Serializable {
 
-    private final String name;
+    private String name;
 
-    private final Date birthDate;
+    private Date birthDate;
 
-    private final String breed;
+    private String breed;
 
     private String id;
 
-    private final CatColor color;
+    private CatColor color;
 
     private String ownerId;
 

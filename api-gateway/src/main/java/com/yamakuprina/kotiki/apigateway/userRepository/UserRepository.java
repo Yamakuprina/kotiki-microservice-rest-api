@@ -1,4 +1,4 @@
-package userRepository;
+package com.yamakuprina.kotiki.apigateway.userRepository;
 
 
 import entities.User;

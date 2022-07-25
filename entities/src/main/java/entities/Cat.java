@@ -1,5 +1,6 @@
 package entities;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,7 @@ import java.util.UUID;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "cats")
 public class Cat {
@@ -32,12 +34,13 @@ public class Cat {
     @OneToMany(mappedBy = "id")
     private List<Cat> friends;
 
-    public Cat(String name, Date birthDate, String breed, CatColor color) {
-        this.name = name;
-        this.id = UUID.randomUUID().toString();
-        this.birthDate = birthDate;
-        this.breed = breed;
-        this.color = color;
+    public Cat(CatDto catDto) {
+        this.name = catDto.getName();
+        this.id = catDto.getId()==null? UUID.randomUUID().toString() : catDto.getId();
+        this.birthDate = catDto.getBirthDate();
+        this.breed = catDto.getBreed();
+        this.color = catDto.getColor();
+        this.ownerId = catDto.getOwnerId();
     }
 
     public void addFriend(Cat cat){

@@ -53,7 +53,7 @@ public class CatServiceImpl implements CatService {
 
     @Override
     public void save(CatDto catDto) {
-        Cat cat = new Cat(catDto.getName(), catDto.getBirthDate(), catDto.getBreed(), catDto.getColor());
+        Cat cat = new Cat(catDto);
         if (catDto.getId() != null) {
             cat.setId(catDto.getId());
         }

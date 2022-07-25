@@ -1,12 +1,11 @@
-package service;
+package com.yamakuprina.kotiki.apigateway.service;
 
-import entities.Owner;
+import com.yamakuprina.kotiki.apigateway.userRepository.UserRepository;
 import entities.User;
 import entities.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import userRepository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,16 +32,14 @@ public class UserStorageServiceImpl implements UserStorageService {
 //
 //    }
 
+    private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private OwnerServiceRabbitSender ownerService;
 
-    private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-
     @Override
-    public void saveUser(UserDto userDto){
+    public void saveUser(UserDto userDto) {
         User user = new User(userDto);
         String passwordEncoded = encoder.encode(userDto.getPassword());
         user.setPassword(passwordEncoded);
@@ -50,13 +47,13 @@ public class UserStorageServiceImpl implements UserStorageService {
     }
 
     @Override
-    public void deleteUser(String userId){
+    public void deleteUser(String userId) {
         userRepository.deleteById(userId);
     }
 
     @Override
-    public List<UserDto> getAllUsers(){
-        List<User> allUsers =  userRepository.findAll();
+    public List<UserDto> getAllUsers() {
+        List<User> allUsers = userRepository.findAll();
         return usersToUserDtos(allUsers);
     }
 
@@ -69,9 +66,9 @@ public class UserStorageServiceImpl implements UserStorageService {
 //        userRepository.save(user);
 //    }
 
-    private List<UserDto> usersToUserDtos(List<User> users){
+    private List<UserDto> usersToUserDtos(List<User> users) {
         List<UserDto> userDtos = new ArrayList<>();
-        for (User user:users) {
+        for (User user : users) {
             UserDto userDto = new UserDto(user);
             userDtos.add(userDto);
         }

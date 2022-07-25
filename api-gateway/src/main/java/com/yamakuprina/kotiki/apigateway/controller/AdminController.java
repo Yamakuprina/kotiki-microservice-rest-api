@@ -1,10 +1,10 @@
-package controller;
+package com.yamakuprina.kotiki.apigateway.controller;
 
+import com.yamakuprina.kotiki.apigateway.service.UserStorageService;
 import entities.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import service.UserStorageService;
 
 @RestController
 @RequestMapping("/admin/")
