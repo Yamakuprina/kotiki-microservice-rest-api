@@ -27,7 +27,8 @@ public class CatsMQListener {
 
     @RabbitListener(queues = MQConfig.CATS_QUEUE_ID)
     public CatDto findById(String id) {
-        return catService.findById(id);
+        CatDto catDto = catService.findById(id);
+        return catDto==null? new CatDto() : catDto;
     }
 
     @RabbitListener(queues = MQConfig.CATS_QUEUE_SAVE)
@@ -43,10 +44,11 @@ public class CatsMQListener {
     @RabbitListener(queues = MQConfig.CATS_QUEUE_DELETE)
     public String delete(String id) {
         try {
+            if (catService.findById(id)==null) return "404";
             catService.delete(id);
             return "OK";
         } catch (Exception e) {
-            return "BAD_REQUEST";
+            return "500";
         }
     }
 
@@ -63,20 +65,24 @@ public class CatsMQListener {
     @RabbitListener(queues = MQConfig.CATS_QUEUE_ADD_FRIEND)
     public String addCatToFriends(List<String> list) {
         try {
+            if (catService.findById(list.get(0))==null) return "404";
+            if (catService.findById(list.get(1))==null) return "404";
             catService.addCatToFriends(list.get(0), list.get(1));
             return "OK";
         } catch (Exception e) {
-            return "BAD_REQUEST";
+            return "500";
         }
     }
 
     @RabbitListener(queues = MQConfig.CATS_QUEUE_DELETE_FRIEND)
     public String deleteCatFromFriends(List<String> list) {
         try {
+            if (catService.findById(list.get(0))==null) return "404";
+            if (catService.findById(list.get(1))==null) return "404";
             catService.deleteCatFromFriends(list.get(0), list.get(1));
             return "OK";
         } catch (Exception e) {
-            return "BAD_REQUEST";
+            return "500";
         }
     }
 }

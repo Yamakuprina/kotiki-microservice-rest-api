@@ -13,6 +13,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpStatusCodeException;
 
 import java.util.Collection;
 
@@ -36,8 +37,8 @@ public class CatController {
                 String userOwnerId = ((KotikiUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getOwnerId();
                 return ResponseEntity.ok(userService.getAllCats(userOwnerId));
             }
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (HttpStatusCodeException e) {
+            return ResponseEntity.status(e.getStatusCode()).body(e.getMessage());
         }
     }
 
@@ -50,8 +51,8 @@ public class CatController {
             } else {
                 return new ResponseEntity<>("", HttpStatus.FORBIDDEN);
             }
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (HttpStatusCodeException e) {
+            return ResponseEntity.status(e.getStatusCode()).body(e.getMessage());
         }
     }
 
@@ -64,8 +65,8 @@ public class CatController {
             } else {
                 return ResponseEntity.ok(userService.getFriendsByCatId(id));
             }
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (HttpStatusCodeException e) {
+            return ResponseEntity.status(e.getStatusCode()).body(e.getMessage());
         }
     }
 
@@ -81,8 +82,8 @@ public class CatController {
                 userService.addCatToFriends(id, friendId, userOwnerId);
                 return ResponseEntity.ok("Friend successfully saved.");
             }
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (HttpStatusCodeException e) {
+            return ResponseEntity.status(e.getStatusCode()).body(e.getMessage());
         }
     }
 
@@ -98,8 +99,8 @@ public class CatController {
                 userService.deleteCatFromFriends(id, friendId, userOwnerId);
                 return ResponseEntity.ok("Friend successfully deleted.");
             }
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (HttpStatusCodeException e) {
+            return ResponseEntity.status(e.getStatusCode()).body(e.getMessage());
         }
     }
 
@@ -113,8 +114,8 @@ public class CatController {
                 String userOwnerId = ((KotikiUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getOwnerId();
                 return ResponseEntity.ok(userService.getCatsWithCatColor(color, userOwnerId));
             }
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (HttpStatusCodeException e) {
+            return ResponseEntity.status(e.getStatusCode()).body(e.getMessage());
         }
     }
 
@@ -128,8 +129,8 @@ public class CatController {
             } else {
                 return new ResponseEntity<>("", HttpStatus.FORBIDDEN);
             }
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (HttpStatusCodeException e) {
+            return ResponseEntity.status(e.getStatusCode()).body(e.getMessage());
         }
     }
 
@@ -143,8 +144,8 @@ public class CatController {
             } else {
                 return new ResponseEntity<>("", HttpStatus.FORBIDDEN);
             }
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (HttpStatusCodeException e) {
+            return ResponseEntity.status(e.getStatusCode()).body(e.getMessage());
         }
     }
 }
