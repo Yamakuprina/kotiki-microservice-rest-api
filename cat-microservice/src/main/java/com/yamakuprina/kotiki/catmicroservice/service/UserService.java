@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface UserService {
 
+    CatDto findById(String id);
+
     List<CatDto> getAllCats(String userOwnerId);
 
     List<CatDto> getCatsWithCatColor(CatColor color, String userOwnerId);

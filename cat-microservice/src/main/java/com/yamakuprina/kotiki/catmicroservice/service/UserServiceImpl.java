@@ -41,6 +41,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public CatDto findById(String id) {
+        Cat cat = catRepository.findById(id).orElseThrow();
+        return new CatDto(cat);
+    }
+
+    @Override
     public List<CatDto> getAllCats(String userOwnerId) {
         List<Cat> allCats = catRepository.findByOwnerId(userOwnerId);
         return catsToCatDtos(allCats);

@@ -59,6 +59,7 @@ public class CatsMQListener {
 
     @RabbitListener(queues = MQConfig.CATS_QUEUE_FRIENDS)
     public List<CatDto> getFriendsById(String id) {
+        if (catService.findById(id)==null) return null;
         return catService.getFriendsById(id);
     }
 

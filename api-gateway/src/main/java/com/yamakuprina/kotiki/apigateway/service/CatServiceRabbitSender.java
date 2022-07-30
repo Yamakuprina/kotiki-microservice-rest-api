@@ -89,7 +89,7 @@ public class CatServiceRabbitSender implements CatService {
                 Queues.ROUTING_KEY + Queues.CATS_QUEUE_FRIENDS,
                 id,
                 ParameterizedTypeReference.forType(List.class));
-        if (Objects.equals(catDtos,null)) throw new HttpServerErrorException(HttpStatus.NOT_FOUND);
+        if (catDtos==null) throw new HttpServerErrorException(HttpStatus.NOT_FOUND);
         return catDtos;
     }
 

@@ -29,26 +29,31 @@ public class UserMQListener {
 
     @RabbitListener(queues = MQConfig.USER_QUEUE_CATS_FRIENDS)
     public List<CatDto> getFriendsById(String id) {
+        if (userService.findById(id)==null) return null;
         return userService.getFriendsByCatId(id);
     }
 
     @RabbitListener(queues = MQConfig.USER_QUEUE_CATS_ADD_FRIEND)
     public String addCatToFriends(List<String> list) {
         try {
+            if (userService.findById(list.get(0))==null) return "404";
+            if (userService.findById(list.get(1))==null) return "404";
             userService.addCatToFriends(list.get(0), list.get(1), list.get(2));
             return "OK";
         } catch (Exception e) {
-            return "BAD_REQUEST";
+            return "500";
         }
     }
 
     @RabbitListener(queues = MQConfig.USER_QUEUE_CATS_DELETE_FRIEND)
     public String deleteCatFromFriends(List<String> list) {
         try {
+            if (userService.findById(list.get(0))==null) return "404";
+            if (userService.findById(list.get(1))==null) return "404";
             userService.deleteCatFromFriends(list.get(0), list.get(1), list.get(2));
             return "OK";
         } catch (Exception e) {
-            return "BAD_REQUEST";
+            return "500";
         }
     }
 }
