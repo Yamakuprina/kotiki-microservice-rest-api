@@ -46,7 +46,7 @@ public class CatServiceRabbitSender implements CatService {
                 id,
                 ParameterizedTypeReference.forType(CatDto.class)
         );
-        if (catDto==null) throw new HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR);
+        if (catDto == null) throw new HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR);
         if (Objects.equals(catDto.getId(), null)) throw new HttpServerErrorException(HttpStatus.NOT_FOUND);
         return catDto;
     }
@@ -55,7 +55,8 @@ public class CatServiceRabbitSender implements CatService {
     public void save(CatDto cat) throws HttpStatusCodeException {
         if (cat.getOwnerId() == null)
             cat.setOwnerId(((KotikiUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getOwnerId());
-        else if (ownerService.findById(cat.getOwnerId()) == null) throw new HttpServerErrorException(HttpStatus.NOT_FOUND,"No Owner found");
+        else if (ownerService.findById(cat.getOwnerId()) == null)
+            throw new HttpServerErrorException(HttpStatus.NOT_FOUND, "No Owner found");
         String response = template.convertSendAndReceiveAsType(Queues.EXCHANGE,
                 Queues.ROUTING_KEY + Queues.CATS_QUEUE_SAVE,
                 cat,
@@ -89,7 +90,7 @@ public class CatServiceRabbitSender implements CatService {
                 Queues.ROUTING_KEY + Queues.CATS_QUEUE_FRIENDS,
                 id,
                 ParameterizedTypeReference.forType(List.class));
-        if (catDtos==null) throw new HttpServerErrorException(HttpStatus.NOT_FOUND);
+        if (catDtos == null) throw new HttpServerErrorException(HttpStatus.NOT_FOUND);
         return catDtos;
     }
 

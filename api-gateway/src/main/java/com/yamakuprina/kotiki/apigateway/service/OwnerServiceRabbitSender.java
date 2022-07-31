@@ -26,19 +26,19 @@ public class OwnerServiceRabbitSender implements OwnerService {
     }
 
     @Override
-    public OwnerDto findById(String id)  throws HttpStatusCodeException {
+    public OwnerDto findById(String id) throws HttpStatusCodeException {
         if (id.length() != 36) throw new HttpServerErrorException(HttpStatus.BAD_REQUEST);
         OwnerDto ownerDto = template.convertSendAndReceiveAsType(Queues.EXCHANGE,
                 Queues.ROUTING_KEY + Queues.OWNERS_QUEUE_ID,
                 id,
                 ParameterizedTypeReference.forType(OwnerDto.class));
-        if (ownerDto==null) throw new HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR);
+        if (ownerDto == null) throw new HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR);
         if (Objects.equals(ownerDto.getId(), null)) throw new HttpServerErrorException(HttpStatus.NOT_FOUND);
         return ownerDto;
     }
 
     @Override
-    public void save(OwnerDto ownerDto)  throws HttpStatusCodeException{
+    public void save(OwnerDto ownerDto) throws HttpStatusCodeException {
         String response = template.convertSendAndReceiveAsType(Queues.EXCHANGE,
                 Queues.ROUTING_KEY + Queues.OWNERS_QUEUE_SAVE,
                 ownerDto,
@@ -47,7 +47,7 @@ public class OwnerServiceRabbitSender implements OwnerService {
     }
 
     @Override
-    public void delete(String id)  throws HttpStatusCodeException{
+    public void delete(String id) throws HttpStatusCodeException {
         if (id.length() != 36) throw new HttpServerErrorException(HttpStatus.BAD_REQUEST);
         String response = template.convertSendAndReceiveAsType(Queues.EXCHANGE,
                 Queues.ROUTING_KEY + Queues.OWNERS_QUEUE_DELETE,
@@ -66,7 +66,7 @@ public class OwnerServiceRabbitSender implements OwnerService {
     }
 
     @Override
-    public List<CatDto> getCatsByOwnerId(String ownerId) throws HttpStatusCodeException{
+    public List<CatDto> getCatsByOwnerId(String ownerId) throws HttpStatusCodeException {
         if (ownerId.length() != 36) throw new HttpServerErrorException(HttpStatus.BAD_REQUEST);
         return userService.getAllCats(ownerId);
     }

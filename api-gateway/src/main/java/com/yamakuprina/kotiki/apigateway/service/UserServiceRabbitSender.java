@@ -58,7 +58,7 @@ public class UserServiceRabbitSender implements UserService {
     }
 
     @Override
-    public List<CatDto> getFriendsByCatId(String catId) throws HttpStatusCodeException{
+    public List<CatDto> getFriendsByCatId(String catId) throws HttpStatusCodeException {
         if (catId.length() != 36) throw new HttpServerErrorException(HttpStatus.BAD_REQUEST);
         List<CatDto> catDtos = template.convertSendAndReceiveAsType(
                 Queues.EXCHANGE,
@@ -66,12 +66,12 @@ public class UserServiceRabbitSender implements UserService {
                 catId,
                 ParameterizedTypeReference.forType(List.class)
         );
-        if (catDtos==null) throw new HttpServerErrorException(HttpStatus.NOT_FOUND);
+        if (catDtos == null) throw new HttpServerErrorException(HttpStatus.NOT_FOUND);
         return catDtos;
     }
 
     @Override
-    public void deleteCatFromFriends(String id, String friendId, String userOwnerId) throws HttpStatusCodeException{
+    public void deleteCatFromFriends(String id, String friendId, String userOwnerId) throws HttpStatusCodeException {
         if (id.length() != 36) throw new HttpServerErrorException(HttpStatus.BAD_REQUEST);
         if (friendId.length() != 36) throw new HttpServerErrorException(HttpStatus.BAD_REQUEST);
         List<String> list = List.of(id, friendId, userOwnerId);

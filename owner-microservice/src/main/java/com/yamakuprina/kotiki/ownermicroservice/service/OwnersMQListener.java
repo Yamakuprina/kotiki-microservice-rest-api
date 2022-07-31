@@ -22,7 +22,7 @@ public class OwnersMQListener {
     @RabbitListener(queues = MQConfig.OWNERS_QUEUE_ID)
     public OwnerDto findById(String id) {
         OwnerDto ownerDto = ownerService.findById(id);
-        return ownerDto == null? new OwnerDto() : ownerDto;
+        return ownerDto == null ? new OwnerDto() : ownerDto;
     }
 
     @RabbitListener(queues = MQConfig.OWNERS_QUEUE_SAVE)
@@ -38,7 +38,7 @@ public class OwnersMQListener {
     @RabbitListener(queues = MQConfig.OWNERS_QUEUE_DELETE)
     public String delete(String id) {
         try {
-            if (ownerService.findById(id)==null) return "404";
+            if (ownerService.findById(id) == null) return "404";
             ownerService.delete(id);
             return "OK";
         } catch (Exception e) {

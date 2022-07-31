@@ -20,14 +20,15 @@ public class UserStorageServiceImpl implements UserStorageService {
     private final UserRepository userRepository;
     private final OwnerServiceRabbitSender ownerService;
 
-    public UserStorageServiceImpl(@Autowired UserRepository userRepository,@Autowired OwnerServiceRabbitSender ownerService) {
+    public UserStorageServiceImpl(@Autowired UserRepository userRepository, @Autowired OwnerServiceRabbitSender ownerService) {
         this.userRepository = userRepository;
         this.ownerService = ownerService;
     }
 
     @Override
     public void saveUser(UserDto userDto) throws HttpStatusCodeException {
-        if (ownerService.findById(userDto.getOwnerId())==null) throw new HttpServerErrorException(HttpStatus.BAD_REQUEST);
+        if (ownerService.findById(userDto.getOwnerId()) == null)
+            throw new HttpServerErrorException(HttpStatus.BAD_REQUEST);
         User user = new User(userDto);
         String passwordEncoded = encoder.encode(userDto.getPassword());
         user.setPassword(passwordEncoded);
