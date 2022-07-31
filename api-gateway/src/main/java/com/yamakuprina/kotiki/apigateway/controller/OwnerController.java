@@ -10,6 +10,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpStatusCodeException;
 
 import java.util.Collection;
 
@@ -29,8 +30,8 @@ public class OwnerController {
             } else {
                 return new ResponseEntity<>("", HttpStatus.FORBIDDEN);
             }
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (HttpStatusCodeException e) {
+            return ResponseEntity.status(e.getStatusCode()).body(e.getMessage());
         }
     }
 
@@ -43,8 +44,8 @@ public class OwnerController {
             } else {
                 return new ResponseEntity<>("", HttpStatus.FORBIDDEN);
             }
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (HttpStatusCodeException e) {
+            return ResponseEntity.status(e.getStatusCode()).body(e.getMessage());
         }
     }
 
@@ -58,8 +59,8 @@ public class OwnerController {
             } else {
                 return new ResponseEntity<>("", HttpStatus.FORBIDDEN);
             }
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (HttpStatusCodeException e) {
+            return ResponseEntity.status(e.getStatusCode()).body(e.getMessage());
         }
     }
 
@@ -72,8 +73,8 @@ public class OwnerController {
             } else {
                 return new ResponseEntity<>("", HttpStatus.FORBIDDEN);
             }
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (HttpStatusCodeException e) {
+            return ResponseEntity.status(e.getStatusCode()).body(e.getMessage());
         }
     }
 
@@ -87,8 +88,8 @@ public class OwnerController {
             } else {
                 return new ResponseEntity<>("", HttpStatus.FORBIDDEN);
             }
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (HttpStatusCodeException e) {
+            return ResponseEntity.status(e.getStatusCode()).body(e.getMessage());
         }
     }
 }

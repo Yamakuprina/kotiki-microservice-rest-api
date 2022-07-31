@@ -5,6 +5,7 @@ import entities.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpStatusCodeException;
 
 @RestController
 @RequestMapping("/admin/")
@@ -18,8 +19,8 @@ public class AdminController {
         try {
             userStorageService.saveUser(userDto);
             return ResponseEntity.ok("User successfully saved.");
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (HttpStatusCodeException e) {
+            return ResponseEntity.status(e.getStatusCode()).body(e.getMessage());
         }
     }
 
@@ -27,8 +28,8 @@ public class AdminController {
     public ResponseEntity<Object> allUsers() {
         try {
             return ResponseEntity.ok(userStorageService.getAllUsers());
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (HttpStatusCodeException e) {
+            return ResponseEntity.status(e.getStatusCode()).body(e.getMessage());
         }
     }
 
@@ -37,8 +38,8 @@ public class AdminController {
         try {
             userStorageService.deleteUser(userId);
             return ResponseEntity.ok("User successfully deleted.");
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (HttpStatusCodeException e) {
+            return ResponseEntity.status(e.getStatusCode()).body(e.getMessage());
         }
     }
 }
